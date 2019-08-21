@@ -35,25 +35,25 @@ class Complejo():
             return True
         return False
     
-    def suma(self,value):
+    def __add__(self,value):
         return Complejo(self.real+value.real,value.complejo+self.complejo)
 
-    def resta(self,value):
+    def __sub__(self,value):
         return Complejo(self.real-value.real,value.complejo-self.complejo)
 
-    def mult(self,value):
+    def __mul__(self,value):
         return Complejo(value.real*self.real-value.complejo*self.complejo,self.real*value.complejo+self.complejo*value.real)
 
     def divInt(self,value):
         return Complejo(self.getReal()/value,self.getComplejo()/value)
 
-    def div(self,value):
+    def __truediv__(self,value):
         if value.is0():
             raise TypeError("No se puede dividir por cero")
         elif self.is0():
             return Complejo(0,0)
-        conjugado = value.mult(value.conj()).getReal()
-        numerador = self.mult(value.conj())
+        conjugado = (value*value.conj()).getReal()
+        numerador = self*value.conj()
 
         return numerador.divInt(conjugado)
     
@@ -67,7 +67,7 @@ class Complejo():
     def conj(self):
         return Complejo(self.real,-self.complejo)
     
-    def getStr(self):
+    def __str__(self):
         return str(self.real)+" "+str(self.complejo)+"i"
     """Conversión entre representaciones polar y cartesiano"""
     
