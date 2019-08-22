@@ -59,6 +59,10 @@ def main():
             
     matriz = ComplexMatrix(a)
     matriz2 = ComplexMatrix(b)
+    print(matriz)
+    print("")
+    print(matriz2)
+    print("")
     print(matriz*matriz2)
     
     
