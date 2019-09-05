@@ -5,9 +5,14 @@ class ComplexMatrix():
     # m y n son las dimenciones de la matriz
     
     def __init__(self,datos):
-        self.m = len(datos);
-        self.n = len(datos[0]);
+        #m=filas
+        self.filas = len(datos);
+        self.columnas = len(datos[0]);
         self.datos = datos;
+        
+    def __neg__(self):
+        return self*-1;
+    
     def __str__(self):
         representacion =""
         for i in self.datos:
@@ -19,31 +24,58 @@ class ComplexMatrix():
 
 
     def __add__(self, value):
-        if self.n != value.n or self.m != value.m:
+        if self.comunas != value.columnas or self.filas != value.filas:
             raise TypeError("las dimensiones deben ser iguales");
         datos = []
-        for i in range(self.m):
+        for i in range(self.filas):
             datos.append([]);
-            for j in range(self.n):
+            for j in range(self.columnas):
                 datos[i].append(self.datos[i][j]+value.datos[i][j]);
         
         return ComplexMatrix(datos);
+    
     def __mul__(self,value):
-        if  self.n != value.m:
+        if(type(value)==int):
+            return value*self;
+        if  self.columnas != value.filas:
             raise TypeError("las dimensiones deben ser iguales");
         mat = []
-        for i in range(self.m):
+        for i in range(self.filas):
             mat.append([])
-            for j in range(value.n):
+            for j in range(value.columnas):
                 suma = Complejo(0,0)
-                for k in range(self.m):
+                for k in range(self.columnas):
                     suma += self.datos[i][k]*value.datos[k][j]
+                
                 mat[-1].append(suma)
         return ComplexMatrix(mat)
+    
+    def __rmul__(self,value):
+        datos = []
+        for i in self.datos:
+            datos.append([])
+            for j in i:
+                datos[-1].append(value*j)
+        return ComplexMatrix(datos);
                     
         
         
-    
+    def transpuesta(self):
+        datos = []
+        for i in range(self.columnas):
+            datos.append([])
+            for j in range(self.filas):
+                datos[-1].append(self.datos[j][i])
+        return ComplexMatrix(datos);
+    def conj(self):
+        datos = []
+        for i in self.datos:
+            datos.append([])
+            for j in i:
+                datos[-1].append(j.conj())
+        return ComplexMatrix(datos);
+    def adj(self):
+        return self.transpuesta().conj();
 
 
 def main():
@@ -59,7 +91,12 @@ def main():
             
     matriz = ComplexMatrix(a)
     matriz2 = ComplexMatrix(b)
+    print(-matriz)
+    print(matriz*2)
     print(matriz)
+    print(matriz.transpuesta())
+    print(matriz.conj())
+    print(matriz.adj())
     print("")
     print(matriz2)
     print("")

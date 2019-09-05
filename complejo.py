@@ -42,6 +42,8 @@ class Complejo():
         return Complejo(self.real-value.real,value.complejo-self.complejo)
 
     def __mul__(self,value):
+        if(type(value)==int):
+            return value*self;
         return Complejo(value.real*self.real-value.complejo*self.complejo,self.real*value.complejo+self.complejo*value.real)
 
     def divInt(self,value):
@@ -56,6 +58,12 @@ class Complejo():
         numerador = self*value.conj()
 
         return numerador.divInt(conjugado)
+    def __neg__(self):
+        return Complejo(-self.real,-self.complejo)
+    def __rmul__(self,value):
+        n = Complejo(value,0)
+        return n*self;
+        
     
     def modulo(self):
         return (self.real**2+self.complejo**2)**(1/2)
