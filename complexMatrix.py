@@ -76,6 +76,17 @@ class ComplexMatrix():
         return ComplexMatrix(datos);
     def adj(self):
         return self.transpuesta().conj();
+    def trace(self):
+        if(self.filas!=self.columnas):
+            raise TypeError("las dimensiones deben ser iguales");
+        suma = Complejo(0,0); 
+        for i in range(self.filas):
+            suma+=self.datos[i][i];
+        return suma;
+    def norma(self):
+        return ((self.adj()*self).trace().getReal())**(1/2)
+            
+            
 
 
 def main():
@@ -91,12 +102,9 @@ def main():
             
     matriz = ComplexMatrix(a)
     matriz2 = ComplexMatrix(b)
-    print(-matriz)
-    print(matriz*2)
+    
     print(matriz)
-    print(matriz.transpuesta())
-    print(matriz.conj())
-    print(matriz.adj())
+    print(matriz.norma())
     print("")
     print(matriz2)
     print("")
