@@ -21,6 +21,17 @@ class ComplexMatrix():
             representacion += "\n"
         return representacion;
 
+    
+    def __eq__(self,matriz):
+        if matriz.columnas == self.columnas and matriz.filas == self.filas:
+            for i in range(matriz.filas):
+                for j in range(matriz.columnas):
+                    if(matriz.datos[i][j] != self.datos[i][j]):
+                        return False;
+            return True;
+        return False;
+        
+
 
 
     def __add__(self, value):
@@ -92,6 +103,8 @@ class ComplexMatrix():
 def main():
     a = [[(1,0),(2,0),(-3,0)],[(4,0),(0,0),(-2,0)]]
     b = [[(3,0),(1,0)],[(2,0),(4,0)],[(-1,0),(5,0)]]
+    c = [[(3,0),(2,1)],[(2,-1),(1,0)]]
+    
     for i in range(len(a)):
         for j in range(len(a[0])):
             a[i][j] = Complejo(a[i][j][0],a[i][j][1])
@@ -99,11 +112,17 @@ def main():
     for i in range(len(b)):
         for j in range(len(b[0])):
             b[i][j] = Complejo(b[i][j][0],b[i][j][1])
+
+    for i in range(len(c)):
+        for j in range(len(c[0])):
+            c[i][j] = Complejo(c[i][j][0],c[i][j][1])
             
     matriz = ComplexMatrix(a)
     matriz2 = ComplexMatrix(b)
+    ma = ComplexMatrix(c)
+
+    print(ma == ma.adj())
     
-    print(matriz)
     print(matriz.norma())
     print("")
     print(matriz2)
