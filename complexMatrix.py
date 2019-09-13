@@ -35,7 +35,7 @@ class ComplexMatrix():
 
 
     def __add__(self, value):
-        if self.comunas != value.columnas or self.filas != value.filas:
+        if self.columnas != value.columnas or self.filas != value.filas:
             raise TypeError("las dimensiones deben ser iguales");
         datos = []
         for i in range(self.filas):
@@ -87,6 +87,7 @@ class ComplexMatrix():
         return ComplexMatrix(datos);
     def adj(self):
         return self.transpuesta().conj();
+    
     def trace(self):
         if(self.filas!=self.columnas):
             raise TypeError("las dimensiones deben ser iguales");
@@ -94,44 +95,43 @@ class ComplexMatrix():
         for i in range(self.filas):
             suma+=self.datos[i][i];
         return suma;
+    
     def norma(self):
         return ((self.adj()*self).trace().getReal())**(1/2)
+    
+    def toComplexM(mat):
+        for i in range(len(mat)):
+            for j in range(len(mat[0])):
+                mat[i][j] = Complejo(mat[i][j][0],mat[i][j][1])
+        return mat;
+
+    def esUnitaria(self):
+        error = 0.000000000001
+        value = self*self.adj()
+
+        for i in range(value.filas):
+            for j in range(value.columnas):
+                if i==j:
+                    if not(value.datos[i][j].real-1<=error and value.datos[i][j].real-1>=-error):
+                        
+                        return False;
+                else:
+                    if not(value.datos[i][j].real<=error and value.datos[i][j].real>=-error):
+                        return False;
+        return True;
+
+    def distancia(self,value):
+        try:
+            return (self+-value).norma()
+        except:
+            raise TypeError("no se puede hayar la distancia entre estas 2 matrices");
+    def hemitian(self):
+        return self==self.adj()
+
             
             
 
 
-def main():
-    a = [[(1,0),(2,0),(-3,0)],[(4,0),(0,0),(-2,0)]]
-    b = [[(3,0),(1,0)],[(2,0),(4,0)],[(-1,0),(5,0)]]
-    c = [[(3,0),(2,1)],[(2,-1),(1,0)]]
-    
-    for i in range(len(a)):
-        for j in range(len(a[0])):
-            a[i][j] = Complejo(a[i][j][0],a[i][j][1])
-            
-    for i in range(len(b)):
-        for j in range(len(b[0])):
-            b[i][j] = Complejo(b[i][j][0],b[i][j][1])
 
-    for i in range(len(c)):
-        for j in range(len(c[0])):
-            c[i][j] = Complejo(c[i][j][0],c[i][j][1])
-            
-    matriz = ComplexMatrix(a)
-    matriz2 = ComplexMatrix(b)
-    ma = ComplexMatrix(c)
-
-    print(ma == ma.adj())
-    
-    print(matriz.norma())
-    print("")
-    print(matriz2)
-    print("")
-    print(matriz*matriz2)
-    
-    
-main()
-            
-        
     
         
