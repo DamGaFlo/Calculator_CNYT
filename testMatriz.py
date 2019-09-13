@@ -5,6 +5,26 @@ import unittest
 
 class Test(unittest.TestCase):
 
+    def test_deberia_sumar_vector(self):
+        a = ComplexMatrix.toComplexM([[(3,1),(-1,3),(-4,2)]])
+        b = ComplexMatrix.toComplexM([[(1,2),(2,3),(5,7)]])
+        c = ComplexMatrix.toComplexM([[(4,3),(1,6),(1,9)]])
+
+        a = ComplexMatrix(a)
+        b = ComplexMatrix(b)
+        c = ComplexMatrix(c)
+
+        self.assertEqual(b+a,c)
+    def test_deberia_invertir_vector(self):
+        a = ComplexMatrix.toComplexM([[(3,1),(-1,3),(-4,2)]])
+        b = ComplexMatrix.toComplexM([[(-3,-1),(1,-3),(4,-2)]])
+
+        a = ComplexMatrix(a)
+        b = ComplexMatrix(b)
+
+        self.assertEqual(a,-b)
+        
+
     def test_deberia_sumar(self):
         a = ComplexMatrix.toComplexM([[(1,2),(4,5)],[(-5,4),(1,1)],[(1,3),(3,7)]])
         b = ComplexMatrix.toComplexM([[(3,2),(1,2)],[(-1,1),(3,3)],[(2,1),(-2,-2)]])
@@ -15,6 +35,16 @@ class Test(unittest.TestCase):
         c = ComplexMatrix(c)
 
         self.assertEqual(a+b,c)
+        
+    def test_deberia_invertir_matriz(self):
+        a = ComplexMatrix.toComplexM([[(1,2),(4,5)],[(-5,4),(1,1)],[(1,3),(3,7)]])
+        b = ComplexMatrix.toComplexM([[(-1,-2),(-4,-5)],[(5,-4),(-1,-1)],[(-1,-3),(-3,-7)]])
+
+        a = ComplexMatrix(a)
+        b = ComplexMatrix(b)
+
+        self.assertEqual(a,-b)
+        
     def test_no_deberia_sumar(self):
         a = ComplexMatrix.toComplexM([[(1,2),(4,5)],[(-5,4),(1,1)],[(1,3),(3,7)]])
         b = ComplexMatrix.toComplexM([[(3,2),(1,2)],[(-1,1),(3,3)]])
@@ -28,6 +58,19 @@ class Test(unittest.TestCase):
             self.assertTrue(False)
         except:
             self.assertTrue(True)
+        
+    def test_deberia_multiplicar_vector(self):
+        a = ComplexMatrix.toComplexM([[(3,4)],[(1,2)],[(2,4)]])
+        b = ComplexMatrix.toComplexM([[(1,2),(2,3),(5,7)]])
+        c = ComplexMatrix.toComplexM([[(-27,51)]])
+
+        a = ComplexMatrix(a)
+        b = ComplexMatrix(b)
+        c = ComplexMatrix(c)
+
+        self.assertEqual(b*a,c)
+        
+        
             
     def test_deberia_multiplicar(self):
         
@@ -83,6 +126,33 @@ class Test(unittest.TestCase):
         a = ComplexMatrix(a)
 
         self.assertEqual(0,a.distancia(a))
+
+    def test_deberia_ser_transpuesta(self):
+        a = ComplexMatrix.toComplexM([[(1,2),(4,5)],[(-5,4),(1,1)],[(1,3),(3,7)]])
+        b = ComplexMatrix.toComplexM([[(1,2),(-5,4),(1,3)],[(4,5),(1,1),(3,7)]])
+
+        a = ComplexMatrix(a)
+        b = ComplexMatrix(b)
+        
+        self.assertEqual(a.transpuesta(),b)
+    def test_deberia_ser_conjugada(self):
+        a = ComplexMatrix.toComplexM([[(1,2),(4,5)],[(-5,4),(1,1)],[(1,3),(3,7)]])
+        b = ComplexMatrix.toComplexM([[(1,-2),(4,-5)],[(-5,-4),(1,-1)],[(1,-3),(3,-7)]])
+
+        a = ComplexMatrix(a)
+        b = ComplexMatrix(b)
+
+        self.assertEqual(a.conj(),b)
+
+    def test_deberia_ser_adj(self):
+        a = ComplexMatrix.toComplexM([[(1,2),(4,5)],[(-5,4),(1,1)],[(1,3),(3,7)]])
+        b = ComplexMatrix.toComplexM([[(1,-2),(-5,-4),(1,-3)],[(4,-5),(1,-1),(3,-7)]])
+        
+        a = ComplexMatrix(a)
+        b = ComplexMatrix(b)
+
+        self.assertEqual(a.adj(),b)
+        
 
 
     
